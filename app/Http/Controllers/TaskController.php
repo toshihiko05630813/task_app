@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {
@@ -20,16 +20,17 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
-    // タスク保存
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
+        // インスタンスの作成
+        $task = new Task;
 
-        Task::create($request->all());
+        $task->title = $request->title;
+        $task->body = $request->body;
 
+        $task->save();
+
+        // 登録したらindexに戻る
         return redirect()->route('tasks.index');
     }
 
@@ -46,16 +47,18 @@ class TaskController extends Controller
     }
 
     // タスク更新
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
+        //更新データの取得
+        $task = Task::find($id);
 
-        $task->update($request->all());
+        $task->title = $request->title;
+        $task->body = $request->body;
 
-        return redirect()->route('tasks.show', $task->id);
+        $task->save();
+
+
+        return redirect(route('tasks.index'));
     }
 
     // タスク削除
