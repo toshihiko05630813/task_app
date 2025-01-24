@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-    <a href="{{ route('tasks.index') }}">戻る</a>
-    <h1>更新</h1>
+    <h1>タスク編集</h1>
     <form action="{{ route('tasks.update', $task) }}" method="post">
         @csrf
         @method('PATCH')
@@ -20,11 +19,11 @@
 
         <p>
             <label for='body'>本文</label><br>
-            <textarea name="body" class="body" id="body">{{ old('body', $memo->body) }}</textarea>        
+            <textarea name="body" class="body" id="body">{{ old('body', $task->body) }}</textarea>        
         </p>
 
-
         <input type="submit" value="更新">
+        <button onclick='location.href="{{ route('tasks.index') }}"'>詳細に戻る</button>
     </form>
 </body>
 </html>

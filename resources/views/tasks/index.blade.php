@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>タスク一覧</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
     <h1>タスク一覧</h1>
     @foreach ($tasks as $task)
-        <div class="button-groupA">
+        <div class="button-group">
             <a href="{{ route('tasks.show', $task) }}">{{ $task->title }}</a>
             <form action="{{ route('tasks.destroy', $task) }}" method='POST'>
                 @csrf
@@ -49,7 +50,6 @@
 
         <button onclick="location.href='{{ route('tasks.create') }}'">Create Task</button>
     </form>
-    //
 </body>
 
 </html>
